@@ -41,7 +41,8 @@ const ShipForm = ({ classes, ...props }) => {
   const validate = (fieldValues = values) => {
     let temp = { ...errors };
     const existingShip=props.shipList.find(x => x.code === fieldValues.code);
-    if ('name' in fieldValues) { temp.name = fieldValues.name ? empty : requiredText; }
+    if ('name' in fieldValues) { temp.name = fieldValues.name ? empty : requiredText; 
+    temp.name=(/^[A-Za-z0-9\s]+$/).test(fieldValues.name)? empty : temp.name + 'Enter valid name(No special characters allowed)';}
     if ('length' in fieldValues) { temp.length = (fieldValues.length && fieldValues.length > 0) ? empty : requiredText; }
     if ('width' in fieldValues) { temp.width = (fieldValues.width && fieldValues.width > 0) ? empty : requiredText; }
     if ('code' in fieldValues) {
@@ -80,9 +81,9 @@ const ShipForm = ({ classes, ...props }) => {
         <Grid item xs={6}>
           <TextField id="name" name="name" variant="outlined" required label="Name" value={values.name} onChange={handleInputChange}
             {...(errors.name && { error: true, helperText: errors.name })} />
-          <TextField id="length" name="length" variant="outlined" required label="Length" value={values.length} onChange={handleInputChange}
+          <TextField id="length" name="length" variant="outlined" required type="number" label="Length" value={values.length} onChange={handleInputChange}
             {...(errors.length && { error: true, helperText: errors.length })} />
-          <TextField id="width" name="width" variant="outlined" required label="Width" value={values.width} onChange={handleInputChange}
+          <TextField id="width" name="width" variant="outlined" type="number" required label="Width" value={values.width} onChange={handleInputChange}
             {...(errors.width && { error: true, helperText: errors.width })} />
           <TextField id="code" name="code" variant="outlined" required label="Code" value={values.code} onChange={handleInputChange}
             {...(errors.code && { error: true, helperText: errors.code })} />
